@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Lab03_bai01.cs" />
+    <Compile Remove="Lab03_bai01_AssemblyClass.cs" />
+    <Compile Remove="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Lab03_bai01.cs" />
+    <None Include="Lab03_bai01_AssemblyClass.cs" />
+    <None Include="Program.cs" />
+  </ItemGroup>
+
+</Project>
