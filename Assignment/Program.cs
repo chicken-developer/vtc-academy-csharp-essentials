@@ -9,9 +9,12 @@ namespace Assignment
     {
         static void Main(string[] args)
         {
+            listATM atmlist = new listATM();
+            
             char input;
             do
             {
+                Console.Clear();
                 Console.WriteLine("==============================================================");
                 Console.WriteLine("             CHUONG TRINH QUAN LY THE ATM                     ");
                 Console.WriteLine("==============================================================");
@@ -28,7 +31,7 @@ namespace Assignment
                         int input2;
                         do
                         {
-
+                            Console.Clear();
                             Console.WriteLine("==============================================================");
                             Console.WriteLine("                QUAN LY DANH SACH THE ATM                     ");
                             Console.WriteLine("==============================================================");
@@ -46,18 +49,76 @@ namespace Assignment
                             switch (input2)
                             {
                                 case 1:
+                                    // atmlist.createTable();
+                                    //ATM atm = new ATM();
+
+                                    //atmlist.createTable(); 
+                                    Console.WriteLine("Da nhap danh sach the, vui long chon 3 de them the moi !");
+                                    
+                                    //Console.WriteLine("Nhap danh sach thanh cong!");                                    
                                     break;
                                 case 2:
+                                    atmlist.loadData();
+                                    Console.ReadLine();
                                     break;
                                 case 3:
+                                    int inputzz;
+                                    do
+                                    {
+                                        atmlist.input();
+                                        atmlist.insertData(atmlist);
+                                        Console.WriteLine("Ban co muon nhap tiep hay khong? - 1: Tiep tuc  -2 Thoat!");
+                                        inputzz = Convert.ToInt32(Console.ReadLine());
+                                    } while (inputzz != 2);
                                     break;
                                 case 4:
+                                    atmlist.lietkethehethan();
+                                    Console.ReadLine();
                                     break;
                                 case 5:
+                                    atmlist.giahanthe();
+                                    Console.ReadLine();
                                     break;
                                 case 6:
+                                    int inputtemp;
+                                    do
+                                    {
+                                        
+                                        Console.WriteLine("Ban muon sua thong tin nao ?");
+                                        Console.WriteLine("Chon 1 de sua Ten nguoi dung");
+                                        Console.WriteLine("Chon 2 de sua  CMND");
+                                        Console.WriteLine("Chon 3 de sua Ngay sinh");
+                                        Console.WriteLine("Chon 0 de thoat");
+                                        inputtemp = Convert.ToInt32(Console.ReadLine());
+                                        switch (inputtemp)
+                                        {
+                                            case 1:
+                                                Console.WriteLine("MOi nhap vao ma ATM ");
+                                                string maatm = Convert.ToString(Console.ReadLine());
+                                                atmlist.changename(maatm);
+                                                break;
+                                            case 2:
+                                                Console.WriteLine("MOi nhap vao ma ATM ");
+                                                string maatm2 = Convert.ToString(Console.ReadLine());
+                                                atmlist.changecmnd(maatm2);
+                                                break;
+                                            case 3:
+                                                Console.WriteLine("MOi nhap vao ma ATM ");
+                                                string maatm3 = Convert.ToString(Console.ReadLine());
+                                                atmlist.changebirthday(maatm3);
+                                                break;
+                                            case 0:
+                                                break;
+                                            default:
+                                                Console.WriteLine("Nhap sai  !!! ");
+                                                break;
+                                        }
+                                    } while (inputtemp != 0);
+                                    Console.ReadLine();
                                     break;
                                 case 7:
+                                    atmlist.xoaTheHetHan();
+                                    Console.ReadLine();
                                     break;
                                 case 0:
                                     break;
@@ -74,7 +135,7 @@ namespace Assignment
                         do
                         {
 
-
+                            Console.Clear();
                             Console.WriteLine("==============================================================");
                             Console.WriteLine("                   THAO TAC VOI THE ATM                       ");
                             Console.WriteLine("==============================================================");
@@ -92,18 +153,25 @@ namespace Assignment
                             switch (input3)
                             {
                                 case 1:
+                                    atmlist.dangNhap();
                                     break;
                                 case 2:
+                                    atmlist.changepassword(Assignment.ThongTin.sotaikhoan);
                                     break;
                                 case 3:
+                                    atmlist.vantin(Assignment.ThongTin.sotaikhoan);
                                     break;
                                 case 4:
+                                    atmlist.naptien(Assignment.ThongTin.sotaikhoan);
                                     break;
                                 case 5:
+                                    atmlist.ruttien(Assignment.ThongTin.sotaikhoan);
                                     break;
                                 case 6:
+                                    atmlist.chuyentien(Assignment.ThongTin.sotaikhoan, atmlist);
                                     break;
                                 case 7:
+                                    atmlist.lichsugd(Assignment.ThongTin.sotaikhoan);
                                     break;
                                 case 0:
                                     break;

@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Program.cs" />
+    <Compile Remove="Lab06_AssemblyClass.cs" />
+    <Compile Remove="Lab06_bai01.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Program.cs" />
+    <None Include="Lab06_AssemblyClass.cs" />
+    <None Include="Lab06_bai01.cs" />
   </ItemGroup>
 
 </Project>

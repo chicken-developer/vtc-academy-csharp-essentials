@@ -6,7 +6,9 @@ namespace Lab_Hk2_CSharp_06
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Write("\nNhap vao Ngay mo the:");
+            DateTime Ngaymothe = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine( Ngaymothe.ToString("yyyy-MM-dd"));
             //Abstract class: khi có 1 hàm buộc người dùng làm theo khuôn mẫu mà coder viết ra
             // Có thể khai báo field, property,funct trong hàm abstract - chỉ định nghĩa 
             //abstruct là hàm định nghĩa, muốn sử dụng phải kế thừa và dùng hàm kế thừa.
