@@ -138,7 +138,7 @@ namespace AssignmentAssemblyNamespace
             SQLiteConnection m_dbConnection;
             m_dbConnection = new SQLiteConnection("Data Source=D:\\MyDatabase.sqlite;Version=3;");
             m_dbConnection.Open();
-            string sql = "select * from tbl_dsthehethan";
+            string sql = "select * from tbl_atmlists";
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             Console.WriteLine("|==================================================================================================================|");
@@ -473,7 +473,7 @@ namespace AssignmentAssemblyNamespace
                     
                     if (checkquery(sqlnaptien) > 0)
                         Console.WriteLine("Nap tien thanh cong!");
-                    
+                    else
                         Console.WriteLine("Nap tien khong thanh cong!");
 
                 }
@@ -505,7 +505,7 @@ namespace AssignmentAssemblyNamespace
                 string info = "Rut tien mat";
                 DateTime now = DateTime.Now;
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-                Console.WriteLine("Moi nhap vao so tien muon nap vao tai khoan:");
+                Console.WriteLine("Moi nhap vao so tien muon rut tu tai khoan:");
                 moneyout = Convert.ToInt32(Console.ReadLine());
                 Assignment.ThongTin.sotiennap = moneyout;
                 if (moneyout > 0 && moneyout % 20000 == 0 && moneyout % 50000 ==0 && Assignment.ThongTin.Sodu - moneyout > 100000)
@@ -521,7 +521,7 @@ namespace AssignmentAssemblyNamespace
 
                     if (checkquery(sqlnaptien) > 0)
                         Console.WriteLine("Rut tien thanh cong!");
-
+                    else
                     Console.WriteLine("Rut tien khong thanh cong!");
 
                 }

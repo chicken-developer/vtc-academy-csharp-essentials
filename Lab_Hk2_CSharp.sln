@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab_Hk2_CSharp_05", "Lab_Hk
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab_Hk2_CSharp_06", "Lab_Hk2_CSharp_06\Lab_Hk2_CSharp_06.csproj", "{A8BE5BC7-412E-4D77-892B-95AF6C229349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment", "Assignment\Assignment.csproj", "{A0335D7F-B6FD-4193-95D7-DCCEFFA58902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment", "Assignment\Assignment.csproj", "{A0335D7F-B6FD-4193-95D7-DCCEFFA58902}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab_Hk2-CSharp_07", "Lab_Hk2-CSharp_07\Lab_Hk2-CSharp_07.csproj", "{B3AAC9F1-020C-4284-96A7-2A9508FD9D89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{A0335D7F-B6FD-4193-95D7-DCCEFFA58902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0335D7F-B6FD-4193-95D7-DCCEFFA58902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0335D7F-B6FD-4193-95D7-DCCEFFA58902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3AAC9F1-020C-4284-96A7-2A9508FD9D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3AAC9F1-020C-4284-96A7-2A9508FD9D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3AAC9F1-020C-4284-96A7-2A9508FD9D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3AAC9F1-020C-4284-96A7-2A9508FD9D89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
