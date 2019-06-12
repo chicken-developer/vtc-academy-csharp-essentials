@@ -201,17 +201,13 @@ namespace AssignmentAssemblyNamespace
         public void changename(string maatm)
         {
            
-                string newname, oldname, confirmname;
+                string newname, confirmname;
                 string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + maatm + "'";
 
                 // checkselect(sotaikhoan);
                 if (checkselect(sql))
                 {
-                    Console.Write(" Moi nhap vao ten cu:");
-                    oldname = Convert.ToString(Console.ReadLine());
-                    string checkname = "select * from tbl_atmlists where _Tenchuthe = '" + oldname + "' AND _Sotaikhoan = '" + maatm + "';";
-                    if (checkselect(checkname))
-                    {
+                    
                         Console.WriteLine("Moi nhap vao ten moi moi");
                         newname = Convert.ToString(Console.ReadLine());
                         Console.WriteLine("Xac nhan ten moi");
@@ -225,9 +221,7 @@ namespace AssignmentAssemblyNamespace
                             else
                                 Console.WriteLine("Doi ten khong thanh cong!");
 
-                        }
-                        else Console.WriteLine("Ten khong khop");
-
+                       
                     }
                     else Console.WriteLine("Ten cu khong chinh xac");
 
@@ -247,17 +241,13 @@ namespace AssignmentAssemblyNamespace
         public void changecmnd(string maatm)
         {
            
-                string newcmnd, oldcmnd, confirmcmnd;
+                string newcmnd, confirmcmnd;
                 string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + maatm + "'";
 
                 // checkselect(sotaikhoan);
                 if (checkselect(sql))
                 {
-                    Console.Write(" Moi nhap vao CMND cu:");
-                    oldcmnd = Convert.ToString(Console.ReadLine());
-                    string checkcmnd = "select * from tbl_atmlists where _cMND = '" + oldcmnd + "' AND _Sotaikhoan = '" + maatm + "';";
-                    if (checkselect(checkcmnd))
-                    {
+                   
                         Console.WriteLine("Moi nhap vao CMND moi");
                         newcmnd = Convert.ToString(Console.ReadLine());
                         Console.WriteLine("Xac nhan CMND moi");
@@ -274,11 +264,6 @@ namespace AssignmentAssemblyNamespace
                         }
                         else Console.WriteLine("CMND khong khop");
 
-                    }
-                    else Console.WriteLine("CMND cu khong chinh xac");
-
-
-
                 }
                 else
                 {
@@ -294,17 +279,12 @@ namespace AssignmentAssemblyNamespace
         public void changebirthday(string maatm)
         {
 
-            string newbirthday, oldbirthday, confirmbirthday;
+            string newbirthday, confirmbirthday;
             string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + maatm + "'";
 
             // checkselect(sotaikhoan);
             if (checkselect(sql))
             {
-                Console.Write(" Moi nhap vao Ngay sinh cu:");
-                oldbirthday = Convert.ToString(Console.ReadLine());
-                string checkbirthday = "select * from tbl_atmlists where _ngaySinh = '" + oldbirthday + "' AND _Sotaikhoan = '" + maatm + "';";
-                if (checkselect(checkbirthday))
-                {
                     Console.WriteLine("Moi nhap vao Ngay sinh moi");
                     newbirthday = Convert.ToString(Console.ReadLine());
                     Console.WriteLine("Xac nhan Ngay sinh moi");
@@ -318,10 +298,8 @@ namespace AssignmentAssemblyNamespace
                         else
                             Console.WriteLine("Doi Ngay sinh thanh cong!");
 
+                  
                     }
-                    else Console.WriteLine("Ngay sinh khong khop");
-                    
-                }
                 else Console.WriteLine("Ngay sinh cu khong chinh xac");
 
 
@@ -582,7 +560,7 @@ namespace AssignmentAssemblyNamespace
                             Console.WriteLine("Chuyen tien khong thanh cong!");
 
                     }
-                    else Console.WriteLine("SO tien nhap vao khong hop le");
+                    else Console.WriteLine("So tien nhap vao khong hop le");
 
                 }
                 else Console.WriteLine("Khong tim thay nguoi dung nay !");
