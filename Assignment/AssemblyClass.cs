@@ -31,14 +31,15 @@ namespace AssignmentAssemblyNamespace
         public string Sotaikhoan
         {
             get { return soTaiKhoan; }
-            set { if (value != null && value.Length >= 10) soTaiKhoan = value; }
+            set { soTaiKhoan = value; }
         }
         public string Tenchuthe
         {
             get { return tenChuThe; }
             set
             {
-                if (value != null && Array.TrueForAll(value.ToCharArray(), c => char.IsDigit(c) == false)) tenChuThe = value;
+                tenChuThe = value;
+               
             }
         }
         public DateTime Ngaysinh
@@ -46,36 +47,35 @@ namespace AssignmentAssemblyNamespace
             get { return ngaySinh; }
             set
             {
-                DateTime now = DateTime.Now;
-                if ((now.Year - value.Year) >= 18) ngaySinh = value;
+                ngaySinh = value;
             }
         }
         public decimal Cmnd
         {
             get { return cMND; }
-            set { if ((value.ToString().Length) >= 9) cMND = value; }
+            set { cMND = value; }
         }
         public DateTime Ngaymothe
         {
             get { return ngayMoThe; }
-            set { if (value.Year >= ngaySinh.Year + 18) ngayMoThe = value; }
+            set {  ngayMoThe = value; }
         }
         public int Hansudung
         {
             get { return hanSuDung; }
-            set { hanSuDung = value; }
+            set {hanSuDung = value; }
         }
         public decimal Sodu
         {
             get { return soDu; }
-            set { if (value >= 100000) soDu = value; }
+            set {  soDu = value; }
         }
         public int Mapin
         {
             get { return maPIN; }
             set
             {
-                if ((value.ToString().Length == 6) && Array.TrueForAll(value.ToString().ToCharArray(), c => char.IsDigit(c) == true)) maPIN = value;
+                maPIN = value;
             }
         }
         // end property
@@ -151,28 +151,34 @@ namespace AssignmentAssemblyNamespace
         }
         public void lietkethehethan()
         {
-            DateTime now = DateTime.Now;
-            
+            DateTime now = DateTime.Now;            
             SQLiteConnection m_dbConnection;
             m_dbConnection = new SQLiteConnection("Data Source=D:\\MyDatabase.sqlite;Version=3;");
-            m_dbConnection.Open();
-            string sql = "select * from tbl_atmlists" +
-                " where ( _Ngaymothe.Convert.ToDateTime().Year - now.Year )* 12 + " +
-                "( | _Ngaymothe.Convert.ToDateTime().Month - now.Month )";
-            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
+            m_dbConnection.Open();           
+           
             Console.WriteLine("|==================================================================================================================|");
             Console.WriteLine("                                               DANH SACH THE ATM DA HET HAN                                        |");
             Console.WriteLine("|==================================================================================================================|");
             Console.WriteLine("| So tai khoan       |Ten chu the  |  Ngay sinh |  So CMND   |Ngay mo the   | Thoi han( Thang) | So du(VND) | ma PIN |");
-            //
+            string sql = " select*from tbl_atmlists where date('now') >= date(_Ngaymothe, '+' || _Hansudung || +' year'); ";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
-                Console.WriteLine(" " + reader["_Sotaikhoan"] + "       " + reader["_Tenchuthe"] + "   " + reader["_Ngaysinh"].ToString() + "   " + reader["_Cmnd"] + "    " + reader["_Ngaymothe"].ToString() + "           " + reader["_Hansudung"] + "         " + reader["_Sodu"] + "     " + reader["_Mapin"] + "  ");
+            Console.WriteLine(" " + reader["_Sotaikhoan"] + "       " + reader["_Tenchuthe"] + "   " + reader["_Ngaysinh"].ToString() + "   " + reader["_Cmnd"] + "    " + reader["_Ngaymothe"].ToString() + "           " + reader["_Hansudung"] + "         " + reader["_Sodu"] + "     " + reader["_Mapin"] + "  ");
 
         }
         public void xoaTheHetHan()
         {
-            throw new NotImplementedException();
+            DateTime now = DateTime.Now;
+            SQLiteConnection m_dbConnection;
+            m_dbConnection = new SQLiteConnection("Data Source=D:\\MyDatabase.sqlite;Version=3;");
+            m_dbConnection.Open();
+            string sql = " delete from tbl_atmlists where date('now') >= date(_Ngaymothe, '+' || _Hansudung || +' year'); ";
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+                Console.WriteLine(" " + reader["_Sotaikhoan"] + "       " + reader["_Tenchuthe"] + "   " + reader["_Ngaysinh"].ToString() + "   " + reader["_Cmnd"] + "    " + reader["_Ngaymothe"].ToString() + "           " + reader["_Hansudung"] + "         " + reader["_Sodu"] + "     " + reader["_Mapin"] + "  ");
+
         }
         public void giahanthe()
         {
@@ -183,10 +189,20 @@ namespace AssignmentAssemblyNamespace
             string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + maatm + "'";
             if (checkselect(sql))
             {
-                Console.WriteLine("Login successful ! MOi nhap vao so thang muon gia han:");
+                SQLiteConnection m_dbConnection;
+                m_dbConnection = new SQLiteConnection("Data Source=D:\\MyDatabase.sqlite;Version=3;");
+                m_dbConnection.Open();
+                Console.Write("Dang nhap thanh cong ! Moi nhap vao so thang muon gia han: ");
                 decimal giahan = Convert.ToDecimal(Console.ReadLine());
-                Assignment.ThongTin.thoihan = Convert.ToDecimal(dt.Rows[0][6].ToString()) + giahan;
-                Console.WriteLine("Completed! Cam on quy khach da su dung dich vu");
+                if (giahan % 6 == 0)
+                {
+                    string sqlgiahan = " UPDATE tbl_atmlists SET[_Hansudung] = [_Hansudung] + " + giahan + " where _Sotaikhoan = '" + maatm + "'; ";
+                    SQLiteCommand sqlcmdgiahan = new SQLiteCommand(sqlgiahan, m_dbConnection);
+                    sqlcmdgiahan.ExecuteNonQuery();
+                    m_dbConnection.Close();
+                    Console.WriteLine("Hoan thanh ! Cam on quy khach da su dung dich vu");
+                }
+                else Console.WriteLine("So thang gia han khong hop le");
 
             }
             else
@@ -207,10 +223,14 @@ namespace AssignmentAssemblyNamespace
                 // checkselect(sotaikhoan);
                 if (checkselect(sql))
                 {
-                    
-                        Console.WriteLine("Moi nhap vao ten moi moi");
-                        newname = Convert.ToString(Console.ReadLine());
-                        Console.WriteLine("Xac nhan ten moi");
+
+                do
+                {
+                    Console.Write("\nNhap vao Ten moi:");
+                    newname = Convert.ToString(Console.ReadLine());
+
+                } while (newname == null || Array.TrueForAll(newname.ToCharArray(), c => char.IsDigit(c) == true));
+                Console.WriteLine("Xac nhan ten moi");
                         confirmname = Convert.ToString(Console.ReadLine());
                         if (newname == confirmname)
                         {
@@ -241,20 +261,23 @@ namespace AssignmentAssemblyNamespace
         public void changecmnd(string maatm)
         {
            
-                string newcmnd, confirmcmnd;
+                decimal newcmnd, confirmcmnd;
                 string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + maatm + "'";
 
                 // checkselect(sotaikhoan);
                 if (checkselect(sql))
                 {
-                   
-                        Console.WriteLine("Moi nhap vao CMND moi");
-                        newcmnd = Convert.ToString(Console.ReadLine());
-                        Console.WriteLine("Xac nhan CMND moi");
-                        confirmcmnd = Convert.ToString(Console.ReadLine());
+
+                do
+                {
+                    Console.Write("\nNhap vao CMND moi( 9 chu so):");
+                    newcmnd = Convert.ToDecimal(Console.ReadLine());
+                } while ((newcmnd.ToString().Length) < 9);
+                Console.WriteLine("Xac nhan CMND moi");
+                        confirmcmnd = Convert.ToDecimal(Console.ReadLine());
                         if (newcmnd == confirmcmnd)
                         {
-                            string sqlchangecmnd = "UPDATE tbl_atmlists SET [_cMND] = '" + newcmnd.Trim() + "' where _Sotaikhoan = '" + maatm + "';";
+                            string sqlchangecmnd = "UPDATE tbl_atmlists SET [_cMND] = '" + newcmnd + "' where _Sotaikhoan = '" + maatm + "';";
 
                             if (checkquery(sqlchangecmnd) > 0)
                                 Console.WriteLine("Doi CMND thanh cong!");
@@ -279,19 +302,24 @@ namespace AssignmentAssemblyNamespace
         public void changebirthday(string maatm)
         {
 
-            string newbirthday, confirmbirthday;
+            DateTime newbirthday, confirmbirthday;
             string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + maatm + "'";
 
             // checkselect(sotaikhoan);
             if (checkselect(sql))
             {
-                    Console.WriteLine("Moi nhap vao Ngay sinh moi");
-                    newbirthday = Convert.ToString(Console.ReadLine());
-                    Console.WriteLine("Xac nhan Ngay sinh moi");
-                    confirmbirthday = Convert.ToString(Console.ReadLine());
+                DateTime require18 = DateTime.Now;
+                do
+                {
+
+                    Console.Write("\nNhap vao Ngay sinh- Format:MM/dd/yyyy-( Hay dam bao hien tai ban > 18 tuoi):");
+                    newbirthday = Convert.ToDateTime(Console.ReadLine());
+                } while ((require18.Year - newbirthday.Year) < 18);
+                 Console.WriteLine("Xac nhan Ngay sinh moi");
+                    confirmbirthday = Convert.ToDateTime(Console.ReadLine());
                     if (newbirthday == confirmbirthday)
                     {
-                        string sqlchangebirthday = "UPDATE tbl_atmlists SET [_ngaySinh] = '" + newbirthday.Trim() + "' where _Sotaikhoan = '" + maatm + "';";
+                        string sqlchangebirthday = "UPDATE tbl_atmlists SET [_ngaySinh] = '" + newbirthday + "' where _Sotaikhoan = '" + maatm + "';";
 
                         if (checkquery(sqlchangebirthday) > 0)
                             Console.WriteLine("Doi Ngay sinh thanh cong!");
@@ -320,30 +348,59 @@ namespace AssignmentAssemblyNamespace
         {
 
             Console.WriteLine("Nhap vao thong tin the ATM: ");
-            Console.Write("Nhap vao So tai khoan:");
-            Sotaikhoan = Convert.ToString(Console.ReadLine());
-            Console.Write("\nNhap vao Ten chu the:");
-            Tenchuthe = Convert.ToString(Console.ReadLine());
-            Console.Write("\nNhap vao Ngay sinh:");
-            Ngaysinh = Convert.ToDateTime(Console.ReadLine());
-            Console.Write("\nNhap vao CMND:");
-            Cmnd = Convert.ToDecimal(Console.ReadLine());
-            Console.Write("\nNhap vao Ngay mo the:");
-            Ngaymothe = Convert.ToDateTime(Console.ReadLine());
-            Console.Write("\nNhap vao Thoi han:");
-            Hansudung = Convert.ToInt32(Console.ReadLine());
-            Console.Write("\nNhap vao So du :");
-            Sodu = Convert.ToDecimal(Console.ReadLine());
-            Console.Write("\nNhap vao Ma PIN:");
-            Mapin = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                Console.Write("Nhap vao So tai khoan:");
+                Sotaikhoan = Convert.ToString(Console.ReadLine());
+            } while (Sotaikhoan == null || Sotaikhoan.Length <= 10);
 
-            Console.WriteLine(Ngaysinh.ToString("yyyy-MM-dd") + "----" + Ngaymothe.ToString("yyyy-MM-dd"));
+            do {
+            Console.Write("\nNhap vao Ten chu the:");
+            
+            Tenchuthe = Convert.ToString(Console.ReadLine());
+                //char getenter = Convert.ToChar(Console.ReadKey());
+            } while (Tenchuthe == null || ( Array.TrueForAll(Tenchuthe.ToCharArray(), c => char.IsDigit(c) == true)));
+            DateTime require18 = DateTime.Now;
+            do
+            {
+
+                Console.Write("\nNhap vao Ngay sinh- Format:MM/dd/yyyy-( Hay dam bao hien tai ban > 18 tuoi):");
+                Ngaysinh = Convert.ToDateTime(Console.ReadLine());
+            } while ((require18.Year - Ngaysinh.Year) < 18);
+            do
+            {
+                Console.Write("\nNhap vao CMND( 9 chu so):");
+                Cmnd = Convert.ToDecimal(Console.ReadLine());
+            } while ((Cmnd.ToString().Length) < 9);
+            do
+            {
+                Console.Write("\nNhap vao Ngay mo the- Format:MM/dd/yyyy-( Hay dam bao hien tai ban > 18 tuoi):");
+                Ngaymothe = Convert.ToDateTime(Console.ReadLine());
+            } while (Ngaymothe.Year < ngaySinh.Year + 18);
+            do
+            {
+                Console.Write("\nNhap vao Thoi han:");
+                Hansudung = Convert.ToInt32(Console.ReadLine());
+            } while (Hansudung % 6 != 0);
+            do
+            {
+                Console.Write("\nNhap vao So du( Toi thieu 100.000 VND) :");
+                Sodu = Convert.ToDecimal(Console.ReadLine());
+            } while (Sodu < 100000);
+            do
+            {
+                Console.Write("\nNhap vao Ma PIN( 6 chu so):");
+                Mapin = Convert.ToInt32(Console.ReadLine());
+            } while ((Mapin.ToString().Length != 6) || Array.TrueForAll(Mapin.ToString().ToCharArray(), c => char.IsDigit(c) == false));
+           
+
+            Console.WriteLine("Mo the thanh cong !" );
 
 
         }
         public void changepassword(string sotaikhoan)
         {
-            string newpass, oldpass, confirmpass;
+            int newpass, oldpass, confirmpass;
             //if (sotaikhoan == null) Console.WriteLine("Vui long dang nhap truoc khi thuc hien thao tac");
             string sql = "select * from tbl_atmlists where _Sotaikhoan = '" + sotaikhoan + "'";
            
@@ -351,17 +408,21 @@ namespace AssignmentAssemblyNamespace
             if (checkselect(sql))
             {
                 Console.Write(" Moi nhap vao mat khau cu:");
-                oldpass = Convert.ToString(Console.ReadLine());
+                oldpass = Convert.ToInt32(Console.ReadLine());
                 string checkpass = "select * from tbl_atmlists where _maPIN = '" + oldpass + "' AND _Sotaikhoan = '"+sotaikhoan+"';";
                 if (checkselect(checkpass))
                 {
-                    Console.WriteLine("Moi nhap vao mat khau moi");
-                    newpass = Convert.ToString(Console.ReadLine());
+                    do
+                    {
+                        Console.Write("\nNhap vao Ma PIN moi( 6 chu so):");
+                        newpass = Convert.ToInt32(Console.ReadLine());
+                    } while ((newpass.ToString().Length != 6) || Array.TrueForAll(newpass.ToString().ToCharArray(), c => char.IsDigit(c) == false));
+
                     Console.WriteLine("Xac nhan mat khau moi");
-                    confirmpass = Convert.ToString(Console.ReadLine());
+                    confirmpass = Convert.ToInt32(Console.ReadLine());
                     if (newpass == confirmpass)
                     {
-                        string sqlchangepass = "UPDATE tbl_atmlists SET [_Mapin] = '"+newpass.Trim()+"' where _Sotaikhoan = '"+sotaikhoan+"';";
+                        string sqlchangepass = "UPDATE tbl_atmlists SET [_Mapin] = '"+newpass+"' where _Sotaikhoan = '"+sotaikhoan+"';";
                         
                         if (checkquery(sqlchangepass)>0)
                             Console.WriteLine("Doi mat khau thanh cong!");
@@ -441,16 +502,19 @@ namespace AssignmentAssemblyNamespace
                 if (moneyin >0)
                 {
                    
-                    string sqlnguoinhan = " INSERT INTO tbl_lichsugd (_soTaiKhoanGd, _soTaiKhoanNhan, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
-                   "('" + sotaikhoan + "', '" + stknhan + "', '" + info + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneyin + "); ";
-                    SQLiteCommand command2 = new SQLiteCommand(sqlnguoinhan, m_dbConnection);
-                    command.ExecuteNonQuery();
-                    m_dbConnection.Close();
 
                     string sqlnaptien = "UPDATE tbl_atmlists SET [_Sodu] = [_sodu]+ "+moneyin+" where _Sotaikhoan = '" + sotaikhoan + "';";
-                    
+
                     if (checkquery(sqlnaptien) > 0)
+                    {
+
+                        string sqlnguoinhan = " INSERT INTO tbl_lichsugd (_soTaiKhoanGd, _soTaiKhoanNhan, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
+                       "('" + sotaikhoan + "', '" + stknhan + "', '" + info + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneyin + "); ";
+                        SQLiteCommand command2 = new SQLiteCommand(sqlnguoinhan, m_dbConnection);
+                        command.ExecuteNonQuery();
+                        m_dbConnection.Close();
                         Console.WriteLine("Nap tien thanh cong!");
+                    }
                     else
                         Console.WriteLine("Nap tien khong thanh cong!");
 
@@ -489,18 +553,21 @@ namespace AssignmentAssemblyNamespace
                 if (moneyout > 0 && moneyout % 20000 == 0 && moneyout % 50000 ==0 && Assignment.ThongTin.Sodu - moneyout > 100000)
                 {
 
-                    string sqlnguoinhan = " INSERT INTO tbl_lichsugd (_soTaiKhoanGd, _soTaiKhoanNhan, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
-                   "('" + sotaikhoan + "', '" + stknhan + "', '" + info + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneyout + "); ";
-                    SQLiteCommand command2 = new SQLiteCommand(sqlnguoinhan, m_dbConnection);
-                    command.ExecuteNonQuery();
-                    m_dbConnection.Close();
+                   
 
                     string sqlnaptien = "UPDATE tbl_atmlists SET [_Sodu] = [_sodu]- " + moneyout + " where _Sotaikhoan = '" + sotaikhoan + "';";
 
                     if (checkquery(sqlnaptien) > 0)
+                    {
+                        string sqlnguoinhan = " INSERT INTO tbl_lichsugd (_soTaiKhoanGd, _soTaiKhoanNhan, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
+                  "('" + sotaikhoan + "', '" + stknhan + "', '" + info + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneyout + "); ";
+                        SQLiteCommand command2 = new SQLiteCommand(sqlnguoinhan, m_dbConnection);
+                        command.ExecuteNonQuery();
+                        m_dbConnection.Close();
                         Console.WriteLine("Rut tien thanh cong!");
+                    }
                     else
-                    Console.WriteLine("Rut tien khong thanh cong!");
+                        Console.WriteLine("Rut tien khong thanh cong!");
 
                 }
                 else Console.WriteLine("So tien nhap vao khong phu hop! Xin nhap lai");
@@ -536,31 +603,27 @@ namespace AssignmentAssemblyNamespace
                     if (moneychange > 0 && moneychange + 100000 <= Assignment.ThongTin.Sodu)
                     {
                         DateTime now = DateTime.Now;
-                        string noidunggd = "temp";
+                        string noidunggd = "Chuyen tien vao STK: " + idnguoinhan;
                         SQLiteConnection m_dbConnection;
                         m_dbConnection = new SQLiteConnection("Data Source=D:\\MyDatabase.sqlite;Version=3;");
                         m_dbConnection.Open();
                         string sqlnguoichuyen = "UPDATE tbl_atmlists SET [_Sodu] = [_sodu]- " + moneychange + " where _Sotaikhoan = '" + sotaikhoan + "';";
                         // string sqlnguoinhan = "UPDATE tbl_atmlists SET [_Sodu] = [_sodu]- " + moneychange + " where _Sotaikhoan = '" + sotaikhoan + "';";
-                        string sqlnguoinhan = " INSERT INTO tbl_lichsugd (_soTaiKhoanGd, _soTaiKhoanNhan, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
+                        string sqllichsunguoichuyen = " INSERT INTO tbl_lichsugd   (_soTaiKhoanGd, _soTaiKhoanNhan, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
                        "('" + sotaikhoan + "', '" + idnguoinhan + "', '" + noidunggd + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneychange + "); ";
-                                               
+                        string sqlcongtien = "UPDATE tbl_atmlists SET [_Sodu] = [_sodu]+ " + moneychange + " where _Sotaikhoan = '" + idnguoinhan + "';";
                         SQLiteCommand command = new SQLiteCommand(sqlnguoichuyen, m_dbConnection);
                         command.ExecuteNonQuery();
-                        SQLiteCommand command2 = new SQLiteCommand(sqlnguoinhan, m_dbConnection);
+                        SQLiteCommand command2 = new SQLiteCommand(sqllichsunguoichuyen, m_dbConnection);
                         command2.ExecuteNonQuery();
+                        SQLiteCommand command3 = new SQLiteCommand(sqlcongtien, m_dbConnection);
+                        command3.ExecuteNonQuery();
                         chuyentientemp(sotaikhoan, idnguoinhan, moneychange);
                         m_dbConnection.Close();
-
-
-                        if (checkquery(sqlnguoichuyen) > 0 && checkquery(sqlnguoinhan) > 0)
-                            Console.WriteLine("Chuyen tien thanh cong!");
-                                                                    
-                        else
-                            Console.WriteLine("Chuyen tien khong thanh cong!");
-
+                        Console.WriteLine("Chuyen tien thanh cong!");
                     }
-                    else Console.WriteLine("So tien nhap vao khong hop le");
+                    else
+                        Console.WriteLine("Chuyen tien khong thanh cong!");
 
                 }
                 else Console.WriteLine("Khong tim thay nguoi dung nay !");
@@ -585,13 +648,13 @@ namespace AssignmentAssemblyNamespace
             if (checkselect(sql))
             {                   
                         DateTime now = DateTime.Now;
-                        string noidunggd = "Nhan CK tu STK: ";
+                        string noidunggd = " Nhan CK tu STK " + nguoigui;
                         SQLiteConnection m_dbConnection;
                         m_dbConnection = new SQLiteConnection("Data Source=D:\\MyDatabase.sqlite;Version=3;");
                         m_dbConnection.Open();
                         
-                        string sqlnguoinhan = " INSERT INTO tbl_lichsugd (_soTaiKhoanGd, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
-                       "('" + nguoigui + "', '" + noidunggd + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneychange + "); ";
+                        string sqlnguoinhan = " INSERT INTO tbl_lichsugd  (_soTaiKhoanGd, _NoidungGd , _ngayGd, _SotienGd) VALUES" +
+                       "('" + idnguoinhan + "', '" + noidunggd + "', '" + now.ToString("yyyy-MM-dd") + "', " + moneychange + "); ";
                                        
                         SQLiteCommand command2 = new SQLiteCommand(sqlnguoinhan, m_dbConnection);
                         command2.ExecuteNonQuery();

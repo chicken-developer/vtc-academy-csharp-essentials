@@ -117,8 +117,22 @@ namespace Assignment
                                     Console.ReadLine();
                                     break;
                                 case 7:
-                                    atmlist.xoaTheHetHan();
+                                    Console.WriteLine("Danh sach the het han:");
+                                    atmlist.lietkethehethan();
                                     Console.ReadLine();
+                                    Console.WriteLine("Ban co chac muon xoa nhung the het han khong?( Y: Yes - N - No)");
+                                    char checkinput;
+                                    checkinput = Convert.ToChar(Console.ReadLine());
+                                    if (checkinput == 'y' || checkinput == 'Y')
+                                    {
+                                        atmlist.xoaTheHetHan();
+                                        Console.WriteLine("Danh sach the sau khi xoa:");
+                                        atmlist.loadData();
+                                        Console.ReadLine();
+                                    }
+                                    else if (checkinput == 'N' || checkinput == 'n') Console.WriteLine("Nhan phim bat ky de quay lai");
+                                    else Console.WriteLine("Ban da nhap sai");
+                                    //Console.ReadLine();
                                     break;
                                 case 0:
                                     break;
