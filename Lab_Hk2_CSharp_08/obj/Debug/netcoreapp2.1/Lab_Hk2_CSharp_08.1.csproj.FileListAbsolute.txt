@@ -1,0 +1,11 @@
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\bin\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.deps.json
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\bin\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.runtimeconfig.json
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\bin\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.runtimeconfig.dev.json
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\bin\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.dll
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\bin\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.pdb
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\obj\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.csprojAssemblyReference.cache
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\obj\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.csproj.CoreCompileInputs.cache
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\obj\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.AssemblyInfoInputs.cache
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\obj\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.AssemblyInfo.cs
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\obj\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.dll
+C:\Users\QUYNH\source\repos\Lab_HK2_CSharp\Lab_Hk2_CSharp\Lab_Hk2_CSharp_08.1\obj\Debug\netcoreapp2.1\Lab_Hk2_CSharp_08.1.pdb
